@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.VBox?>
+
+<!--
+    Vista principal de la aplicación SwiftType.
+    Contiene un campo de texto para que el usuario escriba la palabra,
+    un botón para validar la entrada y una etiqueta para mostrar mensajes.
+-->
+<VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.swifttype.controller.GameController">
+    <!-- Etiqueta que muestra la palabra aleatoria -->
+    <Label fx:id="wordLabel" text="Palabra Aleatoria"/>
+
+    <!-- Campo de texto para que el usuario escriba la palabra -->
+    <TextField fx:id="inputTextField" onKeyPressed="#handleKeyPress"/>
+
+    <!-- Botón para validar la palabra escrita -->
+    <Button fx:id="validateButton" text="Validar" onAction="#validateWord"/>
+
+    <!-- Etiqueta que muestra mensajes de éxito o error -->
+    <Label fx:id="messageLabel" text=""/>
+</VBox>

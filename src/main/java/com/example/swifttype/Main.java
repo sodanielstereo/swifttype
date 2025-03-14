@@ -14,7 +14,6 @@ public class Main extends Application {
 
     /**
      * Método principal que inicia la aplicación.
-     *
      */
     public static void main(String[] args) {
         launch(args); // Inicia la aplicación JavaFX
@@ -34,7 +33,7 @@ public class Main extends Application {
 
         // Configurar la ventana principal
         primaryStage.setTitle("SwiftType - Escritura Rápida");
-        primaryStage.setScene(new Scene(root, 400, 300));
+        primaryStage.setScene(new Scene(root, 400, 400)); // Ajustar el tamaño de la ventana
         primaryStage.show();
     }
 }

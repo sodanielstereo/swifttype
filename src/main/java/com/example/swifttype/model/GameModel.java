@@ -1,64 +1,69 @@
 package com.example.swifttype.model;
 
 /**
- * Clase que maneja la lógica del juego, incluyendo el temporizador, los niveles y las oportunidades.
+ * Class that handles the game logic, including the timer, levels, and opportunities.
+ * This class is responsible for generating random words, managing the game state,
+ * and adjusting the difficulty as the player progresses.
+ *
+ * @author Daniel Fernando Vallejo Cabrera - 2343154
+ * @version 1.0
  */
 public class GameModel {
     private WordGenerator wordGenerator;
     private String currentWord;
-    private int timeRemaining; // Tiempo restante en segundos
-    private int level; // Nivel actual
-    private int opportunities; // Oportunidades restantes
+    private int timeRemaining; // Remaining time in seconds
+    private int level; // Current level
+    private int opportunities; // Remaining opportunities
 
     /**
-     * Constructor de la clase GameModel.
-     * Inicializa el generador de palabras, el tiempo, el nivel y las oportunidades.
+     * Constructor for the GameModel class.
+     * Initializes the word generator, time, level, and opportunities.
      */
     public GameModel() {
         wordGenerator = new WordGenerator();
-        timeRemaining = 20; // Tiempo inicial de 20 segundos
-        level = 1; // Nivel inicial
-        opportunities = 4; // 4 oportunidades iniciales
+        timeRemaining = 20; // Initial time of 20 seconds
+        level = 1; // Starting level
+        opportunities = 4; // Initial 4 opportunities
         generateNewWord();
     }
 
     /**
-     * Genera una nueva palabra aleatoria.
+     * Generates a new random word.
      */
     public void generateNewWord() {
         currentWord = wordGenerator.getRandomWord();
     }
 
     /**
-     * Obtiene la palabra actual que el usuario debe escribir.
+     * Gets the current word that the user must type.
      *
-     * @return La palabra actual.
+     * @return The current word.
      */
     public String getCurrentWord() {
         return currentWord;
     }
 
     /**
-     * Verifica si la palabra escrita por el usuario es correcta.
+     * Checks if the word typed by the user is correct.
      *
-     * @param userInput La palabra escrita por el usuario.
-     * @return true si la palabra es correcta, false en caso contrario.
+     * @param userInput The word typed by the user.
+     * @return true if the word is correct, false otherwise.
      */
     public boolean checkWord(String userInput) {
         return userInput.equals(currentWord);
     }
 
     /**
-     * Obtiene el tiempo restante en segundos.
+     * Gets the remaining time in seconds.
      *
-     * @return El tiempo restante.
+     * @return The remaining time.
      */
     public int getTimeRemaining() {
         return timeRemaining;
     }
 
     /**
-     * Reduce el tiempo restante en 1 segundo.
+     * Decrements the remaining time by 1 second.
      */
     public void decrementTime() {
         if (timeRemaining > 0) {
@@ -67,51 +72,51 @@ public class GameModel {
     }
 
     /**
-     * Obtiene el nivel actual.
+     * Gets the current level.
      *
-     * @return El nivel actual.
+     * @return The current level.
      */
     public int getLevel() {
         return level;
     }
 
     /**
-     * Incrementa el nivel en 1 y ajusta el tiempo de juego si es necesario.
+     * Increments the level by 1 and adjusts the game time if necessary.
      */
     public void incrementLevel() {
         level++;
-        adjustTimeForLevel(); // Ajustar el tiempo cada 5 niveles
+        adjustTimeForLevel(); // Adjust time every 5 levels
     }
 
     /**
-     * Ajusta el tiempo de juego cada 5 niveles.
+     * Adjusts the game time every 5 levels.
      */
     private void adjustTimeForLevel() {
         if (level % 5 == 0 && timeRemaining > 2) {
-            timeRemaining = Math.max(timeRemaining - 2, 2); // Reduce el tiempo en 2 segundos cada 5 niveles, pero no menos de 2 segundos
+            timeRemaining = Math.max(timeRemaining - 2, 2); // Reduce time by 2 seconds every 5 levels, but not less than 2 seconds
         }
     }
 
     /**
-     * Reinicia el tiempo restante al valor correspondiente.
+     * Resets the remaining time to the corresponding value.
      */
     public void resetTime() {
-        int baseTime = 20; // Tiempo base
-        int reduction = (level / 5) * 2; // Reducción de 2 segundos por cada 5 niveles
-        timeRemaining = Math.max(baseTime - reduction, 2); // No menos de 2 segundos
+        int baseTime = 20; // Base time
+        int reduction = (level / 5) * 2; // Reduction of 2 seconds for every 5 levels
+        timeRemaining = Math.max(baseTime - reduction, 2); // Not less than 2 seconds
     }
 
     /**
-     * Obtiene las oportunidades restantes.
+     * Gets the remaining opportunities.
      *
-     * @return Las oportunidades restantes.
+     * @return The remaining opportunities.
      */
     public int getOpportunities() {
         return opportunities;
     }
 
     /**
-     * Reduce las oportunidades restantes en 1.
+     * Decreases the remaining opportunities by 1.
      */
     public void decrementOpportunities() {
         if (opportunities > 0) {

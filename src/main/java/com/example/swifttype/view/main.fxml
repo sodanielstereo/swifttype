@@ -10,38 +10,33 @@
 <?import javafx.scene.text.Font?>
 
 <BorderPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.swifttype.controller.GameController">
-    <!-- Asignar fx:id al BorderPane -->
-    <fx:define>
-        <BorderPane fx:id="root"/>
-    </fx:define>
-
-    <!-- Parte superior: Nivel y tiempo restante -->
+    <!-- Top section: Level and remaining time -->
     <top>
         <HBox alignment="CENTER" spacing="10" style="-fx-padding: 10;">
-            <Label text="Nivel:" style="-fx-font-size: 18px; -fx-text-fill: #333333; -fx-font-weight: bold;"/>
+            <Label text="Level:" style="-fx-font-size: 18px; -fx-text-fill: #333333; -fx-font-weight: bold;"/>
             <Label fx:id="levelLabel" text="1" style="-fx-font-size: 18px; -fx-text-fill: #333333; -fx-font-weight: bold;"/>
-            <Label text="Tiempo:" style="-fx-font-size: 18px; -fx-text-fill: #333333; -fx-font-weight: bold;"/>
+            <Label text="Time:" style="-fx-font-size: 18px; -fx-text-fill: #333333; -fx-font-weight: bold;"/>
             <Label fx:id="timeLabel" text="20s" style="-fx-font-size: 18px; -fx-text-fill: #333333; -fx-font-weight: bold;"/>
         </HBox>
     </top>
 
-    <!-- Centro: Palabra aleatoria y campo de texto -->
+    <!-- Center section: Random word and input field -->
     <center>
         <VBox alignment="CENTER" spacing="20" style="-fx-padding: 20;">
-            <Label fx:id="wordLabel" text="Palabra Aleatoria" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #333333;"/>
+            <Label fx:id="wordLabel" text="Random Word" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #333333;"/>
             <TextField fx:id="inputTextField" onKeyPressed="#handleKeyPress" style="-fx-font-size: 18px; -fx-padding: 10px; -fx-background-radius: 5;"/>
         </VBox>
     </center>
 
-    <!-- Parte inferior: Botón de validación, mensajes de feedback y sol eclipsado -->
+    <!-- Bottom section: Validation button, feedback messages, and sun eclipse -->
     <bottom>
         <VBox alignment="CENTER" spacing="10" style="-fx-padding: 20;">
-            <Button fx:id="validateButton" text="Validar" onAction="#validateWord" style="-fx-font-size: 16px; -fx-padding: 10px 20px; -fx-background-color: #4CAF50; -fx-text-fill: white; -fx-background-radius: 5;"/>
+            <Button fx:id="validateButton" text="Validate" onAction="#validateWord" style="-fx-font-size: 16px; -fx-padding: 10px 20px; -fx-background-color: #4CAF50; -fx-text-fill: white; -fx-background-radius: 5;"/>
             <Label fx:id="messageLabel" style="-fx-font-size: 16px; -fx-text-fill: #ff0000; -fx-font-weight: bold;"/>
 
-            <!-- Sol eclipsado -->
+            <!-- Sun eclipse -->
             <StackPane>
-                <!-- Sol completo -->
+                <!-- Full sun -->
                 <Circle radius="50" fill="gold" fx:id="sunCircle"/>
                 <!-- Eclipse (Clip) -->
                 <Circle radius="0" fill="black" fx:id="sunEclipseClip"/>

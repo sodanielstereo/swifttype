@@ -22,46 +22,49 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 /**
- * Controlador principal del juego. Maneja la interacción entre la vista y el modelo.
- * Esta clase es responsable de gestionar la lógica del juego, incluyendo la validación de palabras,
- * el manejo del tiempo, la actualización de la interfaz y la gestión de las oportunidades del jugador.
+ * Main controller for the game. Manages the interaction between the view and the model.
+ * This class is responsible for handling the game logic, including word validation,
+ * time management, UI updates, and player opportunities.
+ *
+ * @author Daniel Fernando Vallejo Cabrera - 2343154
+ * @version 1.0
  */
 public class GameController implements Initializable {
     @FXML
-    private BorderPane root; // Referencia al BorderPane principal
+    private BorderPane root; // Reference to the main BorderPane
     @FXML
-    private Label wordLabel; // Muestra la palabra aleatoria
+    private Label wordLabel; // Displays the random word
     @FXML
-    private TextField inputTextField; // Campo para escribir la palabra
+    private TextField inputTextField; // Field for user input
     @FXML
-    private Label messageLabel; // Muestra mensajes de éxito o error
+    private Label messageLabel; // Displays success or error messages
     @FXML
-    private Label timeLabel; // Muestra el tiempo restante
+    private Label timeLabel; // Displays the remaining time
     @FXML
-    private Label levelLabel; // Muestra el nivel actual
+    private Label levelLabel; // Displays the current level
     @FXML
-    private Circle sunCircle; // Representa el sol completo
+    private Circle sunCircle; // Represents the full sun
     @FXML
-    private Circle sunEclipseClip; // Representa el eclipse del sol
+    private Circle sunEclipseClip; // Represents the eclipse of the sun
     @FXML
-    private Button validateButton; // Botón para validar la palabra
+    private Button validateButton; // Button to validate the word
 
-    private GameModel gameModel; // Modelo del juego
-    private Timeline timeline; // Temporizador
-    private boolean isGameActive; // Indica si el juego está activo
+    private GameModel gameModel; // Game model
+    private Timeline timeline; // Timer
+    private boolean isGameActive; // Indicates if the game is active
 
     /**
-     * Método de inicialización del controlador.
-     * Se ejecuta automáticamente después de cargar la vista.
-     * Configura el fondo degradado, inicializa el modelo del juego, muestra la primera palabra
-     * y comienza el temporizador.
+     * Initialization method for the controller.
+     * This method is automatically executed after the view is loaded.
+     * It sets up the gradient background, initializes the game model,
+     * displays the first word, and starts the timer.
      *
-     * @param location  La ubicación utilizada para resolver rutas relativas para el objeto raíz.
-     * @param resources Los recursos utilizados para localizar el objeto raíz.
+     * @param location  The location used to resolve relative paths for the root object.
+     * @param resources The resources used to localize the root object.
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        // Configurar el fondo degradado
+        // Set up the gradient background
         LinearGradient gradient = new LinearGradient(0, 0, 1, 1, true, null,
                 new Stop(0, javafx.scene.paint.Color.web("#87CEEB")),
                 new Stop(1, javafx.scene.paint.Color.web("#1E90FF")));
@@ -69,45 +72,45 @@ public class GameController implements Initializable {
 
         gameModel = new GameModel();
         showNewWord();
-        updateSunProgress(); // Actualizar el sol al inicio
+        updateSunProgress(); // Update the sun at the start
         startTimer();
     }
 
     /**
-     * Muestra una nueva palabra aleatoria en la interfaz.
-     * Actualiza las etiquetas de la palabra, el tiempo restante y el nivel.
+     * Displays a new random word in the UI.
+     * Updates the word, remaining time, and level labels.
      */
     private void showNewWord() {
         wordLabel.setText(gameModel.getCurrentWord());
-        timeLabel.setText("Tiempo: " + gameModel.getTimeRemaining() + "s");
-        levelLabel.setText("Nivel: " + gameModel.getLevel());
+        timeLabel.setText("Time: " + gameModel.getTimeRemaining() + "s");
+        levelLabel.setText("Level: " + gameModel.getLevel());
     }
 
     /**
-     * Inicia el temporizador.
-     * El temporizador decrementa el tiempo restante cada segundo y verifica si el tiempo se ha agotado.
+     * Starts the game timer.
+     * The timer decrements the remaining time every second and checks if the time has run out.
      */
     private void startTimer() {
-        isGameActive = true; // El juego comienza activo
+        isGameActive = true; // The game starts active
         timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
             gameModel.decrementTime();
-            timeLabel.setText("Tiempo: " + gameModel.getTimeRemaining() + "s");
+            timeLabel.setText("Time: " + gameModel.getTimeRemaining() + "s");
 
             if (gameModel.getTimeRemaining() == 0) {
-                // Si el tiempo se acaba, mantener el nivel, reiniciar el tiempo y mostrar una nueva palabra
-                gameModel.decrementOpportunities(); // Reducir una oportunidad
-                updateSunProgress(); // Actualizar el sol después de un error
+                // If time runs out, keep the level, reset the time, and show a new word
+                gameModel.decrementOpportunities(); // Reduce an opportunity
+                updateSunProgress(); // Update the sun after an error
 
                 if (gameModel.getOpportunities() == 0) {
                     timeline.stop();
-                    isGameActive = false; // El juego se detiene
-                    messageLabel.setText("¡Juego terminado! Niveles completados: " + (gameModel.getLevel() - 1));
+                    isGameActive = false; // The game stops
+                    messageLabel.setText("Game Over! Levels completed: " + (gameModel.getLevel() - 1));
                 } else {
-                    // Si aún hay oportunidades, mantener el nivel, reiniciar el tiempo y mostrar una nueva palabra
-                    gameModel.generateNewWord(); // Generar una nueva palabra
-                    gameModel.resetTime(); // Reiniciar el tiempo
-                    showNewWord(); // Mostrar la nueva palabra
-                    inputTextField.clear(); // Limpiar el campo de texto
+                    // If there are still opportunities, keep the level, reset the time, and show a new word
+                    gameModel.generateNewWord(); // Generate a new word
+                    gameModel.resetTime(); // Reset the time
+                    showNewWord(); // Show the new word
+                    inputTextField.clear(); // Clear the input field
                 }
             }
         }));
@@ -116,65 +119,65 @@ public class GameController implements Initializable {
     }
 
     /**
-     * Valida la palabra escrita por el usuario.
-     * Compara la palabra ingresada por el usuario con la palabra actual.
-     * Si la palabra es correcta, incrementa el nivel y reinicia el tiempo.
-     * Si la palabra es incorrecta, reduce las oportunidades y actualiza el sol eclipsado.
+     * Validates the word entered by the user.
+     * Compares the user's input with the current word.
+     * If the word is correct, increments the level and resets the time.
+     * If the word is incorrect, reduces the opportunities and updates the sun eclipse.
      */
     @FXML
     private void validateWord() {
         if (!isGameActive) {
-            return; // No validar si el juego no está activo
+            return; // Do not validate if the game is not active
         }
 
         String correctWord = wordLabel.getText();
         String userInput = inputTextField.getText().trim();
 
         if (userInput.equals(correctWord)) {
-            messageLabel.setText("¡Correcto!");
-            gameModel.incrementLevel(); // Incrementa el nivel y ajusta el tiempo
-            gameModel.resetTime(); // Reinicia el tiempo al valor correspondiente
+            messageLabel.setText("Correct!");
+            gameModel.incrementLevel(); // Increment the level and adjust the time
+            gameModel.resetTime(); // Reset the time to the corresponding value
             gameModel.generateNewWord();
             showNewWord();
             inputTextField.clear();
         } else {
-            messageLabel.setText("Error: Inténtalo de nuevo.");
-            gameModel.decrementOpportunities(); // Reduce las oportunidades
-            updateSunProgress(); // Actualizar el sol después de un error
+            messageLabel.setText("Error: Try again.");
+            gameModel.decrementOpportunities(); // Reduce the opportunities
+            updateSunProgress(); // Update the sun after an error
 
             if (gameModel.getOpportunities() == 0) {
                 timeline.stop();
                 isGameActive = false;
-                messageLabel.setText("¡Juego terminado! Niveles completados: " + (gameModel.getLevel() - 1));
+                messageLabel.setText("Game Over! Levels completed: " + (gameModel.getLevel() - 1));
             } else {
-                // Si aún hay oportunidades, mostrar una nueva palabra, mantener el nivel y reiniciar el tiempo
-                gameModel.generateNewWord(); // Generar una nueva palabra
-                gameModel.resetTime(); // Reiniciar el tiempo
-                showNewWord(); // Mostrar la nueva palabra
-                inputTextField.clear(); // Limpiar el campo de texto
+                // If there are still opportunities, show a new word, keep the level, and reset the time
+                gameModel.generateNewWord(); // Generate a new word
+                gameModel.resetTime(); // Reset the time
+                showNewWord(); // Show the new word
+                inputTextField.clear(); // Clear the input field
             }
         }
     }
 
     /**
-     * Actualiza la barra de progreso del sol eclipsado.
-     * El sol se eclipsa progresivamente a medida que el jugador pierde oportunidades.
+     * Updates the progress of the sun eclipse.
+     * The sun is progressively eclipsed as the player loses opportunities.
      */
     private void updateSunProgress() {
-        double progress = 1 - (gameModel.getOpportunities() / 4.0); // Oportunidades restantes (0 a 1)
-        sunEclipseClip.setRadius(50 * progress); // Ajustar el radio del eclipse
+        double progress = 1 - (gameModel.getOpportunities() / 4.0); // Remaining opportunities (0 to 1)
+        sunEclipseClip.setRadius(50 * progress); // Adjust the eclipse radius
     }
 
     /**
-     * Maneja el evento de presionar una tecla en el campo de texto.
-     * Si se presiona la tecla "Enter", se valida la palabra.
+     * Handles the key press event in the input field.
+     * If the "Enter" key is pressed, the word is validated.
      *
-     * @param event El evento de teclado.
+     * @param event The key event.
      */
     @FXML
     private void handleKeyPress(KeyEvent event) {
         if (event.getCode() == KeyCode.ENTER) {
-            validateWord(); // Validar al presionar "Enter"
+            validateWord(); // Validate on "Enter" key press
         }
     }
 }

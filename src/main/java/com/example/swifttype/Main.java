@@ -7,33 +7,38 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 /**
- * Clase principal que inicia la aplicación de escritura rápida.
- * Esta clase carga la interfaz gráfica y configura la ventana principal.
+ * Main class that launches the SwiftType application.
+ * This class loads the graphical interface and configures the main window.
+ *
+ * @author Daniel Fernando Vallejo Cabrera - 2343154
+ * @version 1.0
  */
 public class Main extends Application {
 
     /**
-     * Método principal que inicia la aplicación.
+     * Main method that launches the application.
+     *
+     * @param args Command-line arguments.
      */
     public static void main(String[] args) {
-        launch(args); // Inicia la aplicación JavaFX
+        launch(args); // Launch the JavaFX application
     }
 
     /**
-     * Método que se ejecuta al iniciar la aplicación.
-     * Carga la interfaz gráfica desde el archivo FXML y configura la ventana principal.
+     * Method executed when the application starts.
+     * Loads the graphical interface from the FXML file and configures the main window.
      *
-     * @param primaryStage El escenario principal de la aplicación.
-     * @throws Exception Si ocurre un error al cargar la interfaz gráfica.
+     * @param primaryStage The primary stage of the application.
+     * @throws Exception If an error occurs while loading the graphical interface.
      */
     @Override
     public void start(Stage primaryStage) throws Exception {
-        // Cargar la interfaz gráfica desde el archivo FXML
+        // Load the graphical interface from the FXML file
         Parent root = FXMLLoader.load(getClass().getResource("/com/example/swifttype/view/main.fxml"));
 
-        // Configurar la ventana principal
-        primaryStage.setTitle("SwiftType - Escritura Rápida");
-        primaryStage.setScene(new Scene(root, 400, 400)); // Ajustar el tamaño de la ventana
+        // Configure the main window
+        primaryStage.setTitle("SwiftType (V1.0) Eclipsed Sun");
+        primaryStage.setScene(new Scene(root, 400, 400)); // Adjust the window size
         primaryStage.show();
     }
 }
